@@ -56,4 +56,72 @@
 	
 			});
 		});
+
+		$('.deleteCategory').click(function(e) {
+			e.preventDefault();
+
+			var catId=$(this).attr('data-id');
+			var catName=$(this).attr('data-name');
+
+			swal({
+				title: 'Apakah anda yakin?',
+				// text: "Anda akan menghapus data <b>"+catName+"</b>"	,
+				type: 'warning',
+				buttons:{
+					confirm: {
+						text : 'Ya, hapus!',
+						className : 'btn btn-warning'
+					},
+					cancel: {
+						visible: true,
+						className: 'btn btn-primary'
+					}
+				},
+				content: {
+					element: "span",
+					attributes: {
+						innerHTML: "Anda akan menghapus data <strong>" + catName + "</strong>",
+						className: "text-bold"
+					}
+				}
+			}).then((Delete) => {
+				if (Delete) {
+					$.ajax({
+						url:'/category/'+catId,
+						type:'POST',
+						data:{
+							"_method": "DELETE",
+							"_token": "{{ csrf_token() }}"
+						},
+						success: function (response) {
+							swal({
+								title: 'Berhasil!',
+								// text: 'Data '+catName+' dihapus.',
+								type: 'success',
+								buttons : {
+									confirm: {
+										className : 'btn btn-success'
+									}
+								},
+								content: {
+									element: "span",
+									attributes: {
+										innerHTML: 'Data <strong>'+catName+'</strong> dihapus.',
+										className: "text-bold"
+									}
+								}
+							}).then(function() {
+								// Refresh halaman setelah penghapusan data
+								location.reload();
+							});
+						},
+						error:function (xhr) {
+							swal('Error','Terjadi kesalahan saat menghapus data.', 'error');
+						}
+					});
+				} else {
+					swal.close();
+				}
+			});
+		});
 	</script>

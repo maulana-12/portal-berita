@@ -23,10 +23,18 @@
                 <div class="card full-height">
                     <div class="card-header">
                         <div class="card-head-row">
-                            <div class="card-title">Artikel Terpopuler</div>
+                            <div class="card-title">Data Kategori</div>
+                            <a href="{{ route('category.create') }}" class="btn btn-primary ml-auto btn-sm">
+                                <i class="fas fa-plus"></i> Tambah Data
+                            </a>
                         </div>
                     </div>
                     <div class="card-body">
+                        @if (Session::has('success'))
+                            <div class="alert alert-primary">
+                                {{ Session('success') }}
+                            </div>
+                        @endif
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
@@ -45,18 +53,29 @@
                                             <td>{{ $row->slug }}</td>
                                             <td>
                                                 <div class="form-button-action">
-                                                    <button type="button" class="btn btn-link btn-primary btn-lg" >
+                                                    <a href="{{ route('category.edit',$row->id) }}" class="btn btn-link btn-primary btn-lg" >
                                                         <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" class="btn btn-link btn-danger">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
+                                                    </a>
+                                                    {{-- <form action="{{ route('category.destroy',$row->id) }}" 
+                                                        method="post"
+                                                        class="d-inline">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-link btn-danger">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form> --}}
+                                                    <a href="#" class="btn btn-link btn-danger deleteCategory" data-id="{{ $row->id }}" data-name="{{ $row->name }}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <div>Data masih kosong</div>
+                                            <td>
+                                                <div>Data masih kosong</div>
+                                            </td>
                                         </tr>
                                     @endforelse
                                 </tbody>
