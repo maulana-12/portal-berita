@@ -62,6 +62,7 @@
 
 			var catId=$(this).attr('data-id');
 			var catName=$(this).attr('data-name');
+			var url = "{{ route('category.destroy', '') }}" + "/"+catId;
 
 			swal({
 				title: 'Apakah anda yakin?',
@@ -87,7 +88,7 @@
 			}).then((Delete) => {
 				if (Delete) {
 					$.ajax({
-						url:'/category/'+catId,
+						url:url,
 						type:'POST',
 						data:{
 							"_method": "DELETE",
