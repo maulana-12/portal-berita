@@ -18,8 +18,13 @@
                 <li class="nav-item">
                     <a href="{{ route('category.index') }}">
                         <i class="fas fa-tags"></i>
-                        <p>Category</p>
-                        {{-- <span class="caret"></span> --}}
+                        <p>Kategori</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('article.index') }}">
+                        <i class="fas fa-newspaper"></i>
+                        <p>Artikel</p>
                     </a>
                 </li>
             </ul>

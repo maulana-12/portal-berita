@@ -31,7 +31,7 @@
                                     <input type="text" class="form-control" id="name" value="{{ $category->name }}" name="name" placeholder="Masukan Nama Kategori">
                                 </div> 
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-md">Save</button>
+                                    <button type="submit" class="btn btn-primary btn-md">Simpan</button>
                                 </div>
                             </form>
                         </div>
