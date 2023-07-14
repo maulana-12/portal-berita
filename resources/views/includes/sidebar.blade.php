@@ -33,6 +33,12 @@
                         <p>Playlist Video</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('materi.index') }}">
+                        <i class="fas fa-book"></i>
+                        <p>Materi</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

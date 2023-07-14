@@ -73,7 +73,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td>
+                                            <td colspan="4" class="text-center">
                                                 <div>Data masih kosong</div>
                                             </td>
                                         </tr>

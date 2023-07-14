@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MateriController;
 use App\Http\Controllers\PlaylistController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +26,11 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-Route::resource('category', CategoryController::class);
-Route::resource('article', ArticleController::class);
-Route::resource('playlist', PlaylistController::class);
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('category', CategoryController::class);
+    Route::resource('article', ArticleController::class);
+    Route::resource('playlist', PlaylistController::class);
+    Route::resource('materi', MateriController::class);
+});

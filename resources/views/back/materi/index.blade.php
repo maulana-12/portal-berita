@@ -23,8 +23,8 @@
                 <div class="card full-height">
                     <div class="card-header">
                         <div class="card-head-row">
-                            <div class="card-title">Data Artikel</div>
-                            <a href="{{ route('playlist.create') }}" class="btn btn-primary ml-auto btn-sm">
+                            <div class="card-title">Data Materi</div>
+                            <a href="{{ route('materi.create') }}" class="btn btn-primary ml-auto btn-sm">
                                 <i class="fas fa-plus"></i> Tambah Data
                             </a>
                         </div>
@@ -40,23 +40,25 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">ID</th>
-                                        <th scope="col">Judul Playlist</th>
+                                        <th scope="col">Judul Materi</th>
                                         <th scope="col">Slug</th>
+                                        <th scope="col">Link</th>
                                         <th scope="col">Deskripsi</th>
-                                        <th scope="col">Author</th>
+                                        <th scope="col">Playlist</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Gambar</th>
                                         <th scope="col" style="width: 10%" class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($playlists as $row)
+                                    @forelse ($materis as $row)
                                         <tr>
                                             <td>{{ $row->id }}</td>
                                             <td>{{ $row->title }}</td>
                                             <td>{{ $row->slug }}</td>
+                                            <td>{{ $row->link }}</td>
                                             <td>{{ Str::limit($row->description, 55, '...')  }}</td>
-                                            <td>{{ $row->user->name }}</td>
+                                            <td>{{ $row->playlist->title }}</td>
                                             <td>
                                                 @if ($row->is_active==0)
                                                     Draft
@@ -69,7 +71,7 @@
                                             </td>
                                             <td>
                                                 <div class="form-button-action">
-                                                    <a href="{{ route('playlist.edit',$row->id) }}" class="btn btn-link btn-primary btn-lg" >
+                                                    <a href="{{ route('materi.edit',$row->id) }}" class="btn btn-link btn-primary btn-lg" >
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                     {{-- <form action="{{ route('category.destroy',$row->id) }}" 
@@ -81,7 +83,7 @@
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </form> --}}
-                                                    <a href="#" class="btn btn-link btn-danger deletePlaylist" data-id="{{ $row->id }}" data-name="{{ $row->title }}">
+                                                    <a href="#" class="btn btn-link btn-danger deleteMateri" data-id="{{ $row->id }}" data-name="{{ $row->title }}">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
                                                 </div>
@@ -89,7 +91,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="8" class="text-center">
+                                            <td colspan="9" class="text-center">
                                                 Data masih kosong
                                             </td>
                                         </tr>
