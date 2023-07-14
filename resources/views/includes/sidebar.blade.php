@@ -27,6 +27,12 @@
                         <p>Artikel</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('playlist.index') }}">
+                        <i class="fas fa-video"></i>
+                        <p>Playlist Video</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

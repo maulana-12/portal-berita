@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Article;
-use App\Models\Category;
+use App\Models\Playlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -11,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 
-class ArticleController extends Controller
+class PlaylistController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +19,9 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::all();
-        return view('back.article.index', [
-            'articles' => $articles
+        $playlists = Playlist::all();
+        return view('back.playlist.index', [
+            'playlists' => $playlists
         ]);
     }
 
@@ -33,8 +32,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        return view('back.article.create', compact('categories'));
+        return view('back.playlist.create');
     }
 
     /**
@@ -51,13 +49,12 @@ class ArticleController extends Controller
 
         $data = $request->all();
         $data['slug'] = Str::slug($request->title);
-        $data['image'] = $request->file('image')->store('article');
+        $data['image'] = $request->file('image')->store('playlist');
         $data['user_id'] = Auth::id();
-        $data['views'] = 0;
 
-        Article::create($data);
+        Playlist::create($data);
 
-        return redirect()->route('article.index')->with(['success' => 'Data berhasil disimpan']);
+        return redirect()->route('playlist.index')->with(['success' => 'Data berhasil disimpan']);
     }
 
     /**
@@ -80,12 +77,10 @@ class ArticleController extends Controller
     public function edit($id)
     {
         try {
-            $article = Article::findOrFail($id);
-            $categories = Category::all();
+            $playlist = Playlist::findOrFail($id);
 
-            return view('back.article.edit', [
-                'article' => $article,
-                'category' => $categories
+            return view('back.playlist.edit', [
+                'playlist' => $playlist,
             ]);
         } catch (Exception $e) {
             Log::error($e);
@@ -102,31 +97,27 @@ class ArticleController extends Controller
     public function update(Request $request, $id)
     {
         if (empty($request->file('image'))) {
-            $article = Article::find($id);
-            $article->update([
+            $playlist = Playlist::find($id);
+            $playlist->update([
                 'title' => $request->title,
-                'body' => $request->body,
+                'description' => $request->description,
                 'slug' => Str::slug($request->title),
-                'category_id' => $request->category_id,
                 'is_active' => $request->is_active,
                 'user_id' => Auth::id(),
-                // 'views' => 0,
             ]);
-            return redirect()->route('article.index')->with(['success' => 'Data berhasil diupdate']);
+            return redirect()->route('playlist.index')->with(['success' => 'Data berhasil diupdate']);
         } else {
-            $article = Article::find($id);
-            Storage::delete($article->image);
-            $article->update([
+            $playlist = Playlist::find($id);
+            Storage::delete($playlist->image);
+            $playlist->update([
                 'title' => $request->title,
-                'body' => $request->body,
+                'description' => $request->description,
                 'slug' => Str::slug($request->title),
-                'category_id' => $request->category_id,
                 'is_active' => $request->is_active,
                 'user_id' => Auth::id(),
-                // 'views' => 0,
-                'image' => $request->file('image')->store('article'),
+                'image' => $request->file('image')->store('playlist'),
             ]);
-            return redirect()->route('article.index')->with(['success' => 'Data berhasil diupdate']);
+            return redirect()->route('playlist.index')->with(['success' => 'Data berhasil diupdate']);
         }
     }
 
@@ -139,10 +130,10 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         try {
-            $article = Article::findOrFail($id);
-            Storage::delete($article->image);
-            $article->delete();
-            return redirect()->route('article.index')->with(['success' => 'Data berhasil dihapus']);
+            $playlist = Playlist::findOrFail($id);
+            Storage::delete($playlist->image);
+            $playlist->delete();
+            return redirect()->route('playlist.index')->with(['success' => 'Data berhasil dihapus']);
         } catch (Exception $e) {
             Log::error($e);
         }
