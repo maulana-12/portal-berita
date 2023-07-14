@@ -39,6 +39,12 @@
                         <p>Materi</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('slide.index') }}">
+                        <i class="fas fa-book"></i>
+                        <p>Slide</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

@@ -15,34 +15,34 @@
                 <div class="card full-height">
                     <div class="card-header">
                         <div class="card-head-row">
-                            <div class="card-title">Menambahkan Data Playlist</div>
-                            <a href="{{ route('playlist.index') }}" class="btn btn-secondary ml-auto btn-sm">
+                            <div class="card-title">Menambahkan Data Slide</div>
+                            <a href="{{ route('slide.index') }}" class="btn btn-secondary ml-auto btn-sm">
                                 <i class="fas fa-undo"></i> Kembali
                             </a>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="card-body-row">
-                            <form action="{{ route('playlist.store') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('slide.store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="title">Playlist Video</label>
-                                    <input type="text" class="form-control" id="title" name="title" placeholder="Masukan Judul Playlist">
+                                    <label for="title">Judul Slide</label>
+                                    <input type="text" class="form-control" id="title" name="title" placeholder="Masukan Judul Slide">
                                 </div> 
                                 <div class="form-group">
-                                    <label for="description">Deskripsi Playlist</label>
-                                    <textarea type="text" class="form-control" id="editor1" name="description"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="image">Gambar Artikel</label>
-                                    <input type="file" class="form-control" id="image" name="image" placeholder="Masukan Gambar Artikel">
+                                    <label for="link">Link</label>
+                                    <input type="text" class="form-control" id="link" name="link" placeholder="Masukan Link">
                                 </div> 
                                 <div class="form-group">
-                                    <label for="is_active">Status</label>
-                                    <select type="text" class="form-control" id="is_active" name="is_active" placeholder="Masukan Status">
+                                    <label for="status">Status</label>
+                                    <select type="text" class="form-control" id="status" name="status">
                                         <option value="1">Publish</option>
                                         <option value="0">Draft</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="image">Gambar Slide</label>
+                                    <input type="file" class="form-control" id="image" name="image">
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary btn-md">Simpan</button>

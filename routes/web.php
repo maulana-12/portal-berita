@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MateriController;
 use App\Http\Controllers\PlaylistController;
+use App\Http\Controllers\SlideController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,4 +34,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('article', ArticleController::class);
     Route::resource('playlist', PlaylistController::class);
     Route::resource('materi', MateriController::class);
+    Route::resource('slide', SlideController::class);
 });
