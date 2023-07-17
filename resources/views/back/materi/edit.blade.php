@@ -23,7 +23,7 @@
                     </div>
                     <div class="card-body">
                         <div class="card-body-row">
-                            <form action="{{ route('materi.update',$materi->id) }}" method="post">
+                            <form action="{{ route('materi.update',$materi->id) }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">

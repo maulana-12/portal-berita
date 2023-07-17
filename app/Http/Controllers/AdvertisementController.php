@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Slide;
+use App\Models\Advertisement;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 
-class SlideController extends Controller
+class AdvertisementController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +17,8 @@ class SlideController extends Controller
      */
     public function index()
     {
-        $slides = Slide::all();
-        return view('back.slide.index', [
-            'slides' => $slides
-        ]);
+        $advertisements = Advertisement::all();
+        return view('back.advertisement.index',  compact('advertisements'));
     }
 
     /**
@@ -31,7 +28,7 @@ class SlideController extends Controller
      */
     public function create()
     {
-        return view('back.slide.create');
+        return view('back.advertisement.create');
     }
 
     /**
@@ -49,13 +46,13 @@ class SlideController extends Controller
 
         if (!empty($request->file('image'))) {
             $data = $request->all();
-            $data['image'] = $request->file('image')->store('slide');
-            Slide::create($data);
-            return redirect()->route('slide.index')->with(['success' => 'Data berhasil disimpan']);
+            $data['image'] = $request->file('image')->store('advertisement');
+            Advertisement::create($data);
+            return redirect()->route('advertisement.index')->with(['success' => 'Data berhasil disimpan']);
         } else {
             $data = $request->all();
-            Slide::create($data);
-            return redirect()->route('slide.index')->with(['success' => 'Data berhasil disimpan']);
+            Advertisement::create($data);
+            return redirect()->route('advertisement.index')->with(['success' => 'Data berhasil disimpan']);
         }
     }
 
@@ -79,10 +76,10 @@ class SlideController extends Controller
     public function edit($id)
     {
         try {
-            $slide = Slide::findOrFail($id);
+            $advertisement = Advertisement::findOrFail($id);
 
-            return view('back.slide.edit', [
-                'slide' => $slide,
+            return view('back.advertisement.edit', [
+                'advertisement' => $advertisement,
             ]);
         } catch (Exception $e) {
             Log::error($e);
@@ -99,23 +96,23 @@ class SlideController extends Controller
     public function update(Request $request, $id)
     {
         if (empty($request->file('image'))) {
-            $slide = Slide::find($id);
-            $slide->update([
+            $advertisement = Advertisement::find($id);
+            $advertisement->update([
                 'title' => $request->title,
                 'status' => $request->status,
                 'link' => $request->link,
             ]);
-            return redirect()->route('slide.index')->with(['success' => 'Data berhasil diupdate']);
+            return redirect()->route('advertisement.index')->with(['success' => 'Data berhasil diupdate']);
         } else {
-            $slide = Slide::find($id);
-            Storage::delete($slide->image);
-            $slide->update([
+            $advertisement = Advertisement::find($id);
+            Storage::delete($advertisement->image);
+            $advertisement->update([
                 'title' => $request->title,
                 'status' => $request->status,
                 'link' => $request->link,
-                'image' => $request->file('image')->store('slide'),
+                'image' => $request->file('image')->store('advertisement'),
             ]);
-            return redirect()->route('slide.index')->with(['success' => 'Data berhasil diupdate']);
+            return redirect()->route('advertisement.index')->with(['success' => 'Data berhasil diupdate']);
         }
     }
 
@@ -128,10 +125,10 @@ class SlideController extends Controller
     public function destroy($id)
     {
         try {
-            $slide = Slide::findOrFail($id);
-            Storage::delete($slide->image);
-            $slide->delete();
-            return redirect()->route('slide.index')->with(['success' => 'Data berhasil dihapus']);
+            $advertisement = Advertisement::findOrFail($id);
+            Storage::delete($advertisement->image);
+            $advertisement->delete();
+            return redirect()->route('advertisement.index')->with(['success' => 'Data berhasil dihapus']);
         } catch (Exception $e) {
             Log::error($e);
         }

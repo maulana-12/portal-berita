@@ -15,42 +15,46 @@
                 <div class="card full-height">
                     <div class="card-header">
                         <div class="card-head-row">
-                            <div class="card-title">Mengedit Data Slide <strong>{{ $slide->title }}</strong></div>
-                            <a href="{{ route('slide.index') }}" class="btn btn-secondary ml-auto btn-sm">
+                            <div class="card-title">Mengedit Data Iklan <strong>{{ $advertisement->title }}</strong></div>
+                            <a href="{{ route('advertisement.index') }}" class="btn btn-secondary ml-auto btn-sm">
                                 <i class="fas fa-undo"></i> Kembali
                             </a>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="card-body-row">
-                            <form action="{{ route('slide.update',$slide->id) }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('advertisement.update',$advertisement->id) }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">
-                                    <label for="title">Judul slide</label>
-                                    <input type="text" class="form-control" id="title"  name="title" value="{{ $slide->title }}">
+                                    <label for="title">Judul Iklan</label>
+                                    <input type="text" class="form-control" id="title"  name="title" value="{{ $advertisement->title }}">
                                 </div> 
                                 <div class="form-group">
-                                    <label for="link">Link slide</label>
-                                    <input type="text" class="form-control" id="link"  name="link" value="{{ $slide->link }}">
+                                    <label for="link">Link Iklan</label>
+                                    <input type="text" class="form-control" id="link"  name="link" value="{{ $advertisement->link }}">
                                 </div> 
                                 <div class="form-group">
                                     <label for="status">Status</label>
-                                    <select type="file" class="form-control" id="status" name="status" value="{{ $slide->status }}">
-                                        <option value="1" {{ $slide->status=='1' ? 'selected':'' }}>
+                                    <select type="file" class="form-control" id="status" name="status" value="{{ $advertisement->status }}">
+                                        <option value="1" {{ $advertisement->status=='1' ? 'selected':'' }}>
                                             Publish
                                         </option>
-                                        <option value="0" {{ $slide->status=='0' ? 'selected':'' }}>
+                                        <option value="0" {{ $advertisement->status=='0' ? 'selected':'' }}>
                                             Draft
                                         </option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="image">Gambar slide</label>
-                                    <input type="file" class="form-control" id="image" name="image" value="{{ $slide->image }}">
+                                    <label for="image">Gambar Iklan</label>
+                                    <input type="file" class="form-control" id="image" name="image" value="{{ $advertisement->image }}">
                                     <br>
                                     <label for="imageNow">Gambar Saat Ini</label><br>
-                                    <img src="{{ asset('uploads/'.$slide->image) }}" width="100">
+                                    @if ($advertisement->image)
+                                        <img src="{{ asset('uploads/'.$advertisement->image) }}" width="100">
+                                    @else
+                                        Belum ada gambar
+                                    @endif
                                 </div> 
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary btn-md">Simpan</button>

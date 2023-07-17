@@ -45,6 +45,12 @@
                         <p>Slide</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('advertisement.index') }}">
+                        <i class="fas fa-book"></i>
+                        <p>Iklan</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

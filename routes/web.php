@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
@@ -35,4 +36,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('playlist', PlaylistController::class);
     Route::resource('materi', MateriController::class);
     Route::resource('slide', SlideController::class);
+    Route::resource('advertisement', AdvertisementController::class);
 });
