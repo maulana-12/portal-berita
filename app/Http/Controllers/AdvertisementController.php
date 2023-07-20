@@ -18,7 +18,12 @@ class AdvertisementController extends Controller
     public function index()
     {
         $advertisements = Advertisement::all();
-        return view('back.advertisement.index',  compact('advertisements'));
+
+        // Menggunakan SidebarController untuk mendapatkan data sidebar
+        $sidebarController = new SidebarItemsController();
+        $sidebarItems = $sidebarController->getSidebarItems();
+
+        return view('back.advertisement.index',  compact('advertisements', 'sidebarItems'));
     }
 
     /**

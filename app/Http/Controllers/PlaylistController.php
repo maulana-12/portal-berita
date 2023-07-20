@@ -20,8 +20,14 @@ class PlaylistController extends Controller
     public function index()
     {
         $playlists = Playlist::all();
+
+        // Menggunakan SidebarController untuk mendapatkan data sidebar
+        $sidebarController = new SidebarItemsController();
+        $sidebarItems = $sidebarController->getSidebarItems();
+
         return view('back.playlist.index', [
-            'playlists' => $playlists
+            'playlists' => $playlists,
+            'sidebarItems' => $sidebarItems
         ]);
     }
 

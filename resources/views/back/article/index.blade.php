@@ -41,7 +41,7 @@
                                     <tr>
                                         <th scope="col">ID</th>
                                         <th scope="col">Nama Artikel</th>
-                                        <th scope="col">Slug</th>
+                                        <th scope="col">Keterangan Artikel</th>
                                         <th scope="col">Kategori</th>
                                         <th scope="col">Author</th>
                                         <th scope="col">Gambar</th>
@@ -53,7 +53,8 @@
                                         <tr>
                                             <td>{{ $row->id }}</td>
                                             <td>{{ $row->title }}</td>
-                                            <td>{{ $row->slug }}</td>
+                                            {{-- <td>{{ $row->slug }}</td> --}}
+                                            <td>{{ Str::limit($row->body, 55, '...')  }}</td>
                                             <td>{{ $row->category->name }}</td>
                                             <td>{{ $row->user->name }}</td>
                                             <td>

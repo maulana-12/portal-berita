@@ -21,8 +21,14 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::all();
+
+        // Menggunakan SidebarController untuk mendapatkan data sidebar
+        $sidebarController = new SidebarItemsController();
+        $sidebarItems = $sidebarController->getSidebarItems();
+
         return view('back.article.index', [
-            'articles' => $articles
+            'articles' => $articles,
+            'sidebarItems' => $sidebarItems
         ]);
     }
 

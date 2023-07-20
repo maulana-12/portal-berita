@@ -8,49 +8,15 @@
                     </span>
                     <h4 class="text-section">Components</h4>
                 </li>
-                <li class="nav-item active">
-                    <a href="#">
-                        <i class="fas fa-home"></i>
-                        <p>Dashboard</p>
-                        {{-- <span class="caret"></span> --}}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('category.index') }}">
-                        <i class="fas fa-tags"></i>
-                        <p>Kategori</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('article.index') }}">
-                        <i class="fas fa-newspaper"></i>
-                        <p>Artikel</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('playlist.index') }}">
-                        <i class="fas fa-video"></i>
-                        <p>Playlist Video</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('materi.index') }}">
-                        <i class="fas fa-book"></i>
-                        <p>Materi</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('slide.index') }}">
-                        <i class="fas fa-book"></i>
-                        <p>Slide</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('advertisement.index') }}">
-                        <i class="fas fa-book"></i>
-                        <p>Iklan</p>
-                    </a>
-                </li>
+                @foreach ($sidebarItems as $item)
+                    <li class="nav-item {{ request()->is($item['route']) ? ' active' : '' }}">
+                        <a href="{{ $item['url'] }}">
+                            <i class="{{ $item['icon'] }}"></i>
+                            <p>{{ $item['title'] }}</p>
+                            {{-- <span class="caret"></span> --}}
+                        </a>
+                    </li>
+                @endforeach
             </ul>
         </div>
     </div>

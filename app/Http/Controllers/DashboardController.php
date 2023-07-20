@@ -13,7 +13,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('back.dashboard');
+        // Menggunakan SidebarController untuk mendapatkan data sidebar
+        $sidebarController = new SidebarItemsController();
+        $sidebarItems = $sidebarController->getSidebarItems();
+
+        return view('back.dashboard', compact('sidebarItems'));
     }
 
     /**

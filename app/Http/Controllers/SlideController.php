@@ -19,8 +19,14 @@ class SlideController extends Controller
     public function index()
     {
         $slides = Slide::all();
+
+        // Menggunakan SidebarController untuk mendapatkan data sidebar
+        $sidebarController = new SidebarItemsController();
+        $sidebarItems = $sidebarController->getSidebarItems();
+
         return view('back.slide.index', [
-            'slides' => $slides
+            'slides' => $slides,
+            'sidebarItems' => $sidebarItems
         ]);
     }
 

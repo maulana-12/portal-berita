@@ -20,8 +20,14 @@ class MateriController extends Controller
     public function index()
     {
         $materis = Materi::all();
+
+        // Menggunakan SidebarController untuk mendapatkan data sidebar
+        $sidebarController = new SidebarItemsController();
+        $sidebarItems = $sidebarController->getSidebarItems();
+
         return view('back.materi.index', [
-            'materis' => $materis
+            'materis' => $materis,
+            'sidebarItems' => $sidebarItems
         ]);
     }
 

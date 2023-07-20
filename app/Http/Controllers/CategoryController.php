@@ -18,7 +18,12 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('back.category.index', compact('categories'));
+
+        // Menggunakan SidebarController untuk mendapatkan data sidebar
+        $sidebarController = new SidebarItemsController();
+        $sidebarItems = $sidebarController->getSidebarItems();
+
+        return view('back.category.index', compact('categories', 'sidebarItems'));
     }
 
     /**
