@@ -1,3 +1,7 @@
+@php
+    use Illuminate\Support\Carbon;
+@endphp
+
 @extends('front.layouts.frontend')
 
 @section('content')
@@ -16,59 +20,56 @@
                     </a>
                 </div>
                 <h2>{{ $article->title }}</h2>
-                <div>
+                <div style="font-size: 14px;
+                color: #888;
+                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
+                    {{ Carbon::parse($article->created_at)->setTimezone('Asia/Jakarta')->isoFormat('dddd, D MMMM YYYY') }} | {{ Carbon::parse($article->created_at)->setTimezone('Asia/Jakarta')->format('H.i T') }}
+                </div>
+                <div style="text-align: justify;">
                     {!! $article->body !!}
                 </div>
             </div>
         </div>
         <div class="col-lg-4">
             <div>
-                <h4>Iklan</h4>
+                <h4>{{ $advertisementA->title }}</h4>
                 <hr>
-                <a href="">
-                    <img src="" alt="">
+                <a href="{{ $advertisementA->link }}">
+                    <img src="{{ asset('uploads/'.$advertisementA->image) }}" alt="" width="350">
                 </a>
             </div>
 
             <div>
                 <h4 class="mt-4">Kategori</h4>
                 <hr>
-                <div class="d-flex flex-wrap justify-content-between">
-                    <a href="" class="text-decoration-none">
-                        <p>Nama Kategori</p>
-                    </a>                
-                    <p class="text-right"><span class="badge rounded-pill text-bg-dark">7</span></p>
-                </div>
-                <div class="d-flex flex-wrap justify-content-between">
-                    <a href="" class="text-decoration-none">
-                        <p>Nama Kategori</p>
-                    </a>                
-                    <p class="text-right"><span class="badge rounded-pill text-bg-dark">7</span></p>
-                </div>
+                @foreach ($category as $cat)
+                    <div class="d-flex flex-wrap justify-content-between">
+                        <a href="" class="text-decoration-none">
+                            <p>{{ $cat->name }}</p>
+                        </a>                
+                        <p class="text-right"><span class="badge rounded-pill text-bg-dark">{{ $cat->article->count() }}</span></p>
+                    </div>
+                @endforeach
             </div>
 
             <div>
                 <h4 class="mt-4">Artikel Terbaru</h4>
                 <hr>
                 <div>
-                    <div class="d-flex mt-3">
-                        <div class="flex-shrink-0">
-                          {{-- <img src="..." alt="..."> --}}
-                          <svg class="bd-placeholder-img" width="100" height="100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#e5e5e5"></rect><text x="50%" y="50%" fill="#999" dy=".3em">Image</text></svg>
+                    @foreach ($latestPost as $row)
+                        <div class="d-flex mt-3">
+                            <div class="flex-shrink-0">
+                                <img src="{{ asset('uploads/'.$row->image) }}" alt="..." width="100" height="100">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5>{{ $row->title }}</h5>
+                                <span class="badge rounded-pill text-bg-secondary">{{ $row->category->name }}</span>
+                                <span class="badge rounded-pill text-bg-dark">
+                                    {{ Carbon::parse($row->created_at)->setTimezone('Asia/Jakarta')->format('d-m-Y') }}
+                                </span>
+                            </div>
                         </div>
-                        <div class="flex-grow-1 ms-3">
-                          This is some content from a media component. You can replace this with any content and adjust it as needed.
-                        </div>
-                    </div>
-                    <div class="d-flex mt-3">
-                        <div class="flex-shrink-0">
-                          {{-- <img src="..." alt="..."> --}}
-                          <svg class="bd-placeholder-img" width="100" height="100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#e5e5e5"></rect><text x="50%" y="50%" fill="#999" dy=".3em">Image</text></svg>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                          This is some content from a media component. You can replace this with any content and adjust it as needed.
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
 

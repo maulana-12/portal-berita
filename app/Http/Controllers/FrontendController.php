@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advertisement;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Slide;
@@ -32,9 +33,15 @@ class FrontendController extends Controller
     {
         $article = Article::where('slug', $slug)->first();
 
+        $advertisementA = Advertisement::where('id', '1')->first();
+
+        $latestPost = Article::orderBy('created_at', 'DESC')->limit('5')->get();
+
         return view('front.detail-article', [
             'article' => $article,
-            'category' => $this->category
+            'category' => $this->category,
+            'advertisementA' => $advertisementA,
+            'latestPost' => $latestPost
         ]);
     }
 }

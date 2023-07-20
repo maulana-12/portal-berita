@@ -33,7 +33,7 @@
                                 </div> 
                                 <div class="form-group">
                                     <label for="body">Keterangan Artikel</label>
-                                    <textarea type="text" class="form-control" id="body" name="body" >{{ $article->body }}</textarea>
+                                    <textarea type="text" class="form-control" id="editor1" name="body" >{{ $article->body }}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="category_id">Kategori</label>
