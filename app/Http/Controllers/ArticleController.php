@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
+    protected $sidebarItems;
+
+    public function __construct()
+    {
+        // Menggunakan SidebarController untuk mendapatkan data sidebar
+        $sidebarController = new SidebarItemsController();
+        $this->sidebarItems = $sidebarController->getSidebarItems();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,13 +31,9 @@ class ArticleController extends Controller
     {
         $articles = Article::all();
 
-        // Menggunakan SidebarController untuk mendapatkan data sidebar
-        $sidebarController = new SidebarItemsController();
-        $sidebarItems = $sidebarController->getSidebarItems();
-
         return view('back.article.index', [
             'articles' => $articles,
-            'sidebarItems' => $sidebarItems
+            'sidebarItems' => $this->sidebarItems
         ]);
     }
 
@@ -40,7 +45,10 @@ class ArticleController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('back.article.create', compact('categories'));
+        return view('back.article.create', [
+            'categories' => $categories,
+            'sidebarItems' => $this->sidebarItems
+        ]);
     }
 
     /**
@@ -91,7 +99,8 @@ class ArticleController extends Controller
 
             return view('back.article.edit', [
                 'article' => $article,
-                'category' => $categories
+                'category' => $categories,
+                'sidebarItems' => $this->sidebarItems
             ]);
         } catch (Exception $e) {
             Log::error($e);

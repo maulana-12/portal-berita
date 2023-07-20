@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\Storage;
 
 class PlaylistController extends Controller
 {
+    protected $sidebarItems;
+
+    public function __construct()
+    {
+        // Menggunakan SidebarController untuk mendapatkan data sidebar
+        $sidebarController = new SidebarItemsController();
+        $this->sidebarItems = $sidebarController->getSidebarItems();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,13 +30,9 @@ class PlaylistController extends Controller
     {
         $playlists = Playlist::all();
 
-        // Menggunakan SidebarController untuk mendapatkan data sidebar
-        $sidebarController = new SidebarItemsController();
-        $sidebarItems = $sidebarController->getSidebarItems();
-
         return view('back.playlist.index', [
             'playlists' => $playlists,
-            'sidebarItems' => $sidebarItems
+            'sidebarItems' => $this->sidebarItems
         ]);
     }
 
@@ -38,7 +43,9 @@ class PlaylistController extends Controller
      */
     public function create()
     {
-        return view('back.playlist.create');
+        return view('back.playlist.create', [
+            'sidebarItems' => $this->sidebarItems
+        ]);
     }
 
     /**
@@ -87,6 +94,7 @@ class PlaylistController extends Controller
 
             return view('back.playlist.edit', [
                 'playlist' => $playlist,
+                'sidebarItems' => $this->sidebarItems
             ]);
         } catch (Exception $e) {
             Log::error($e);

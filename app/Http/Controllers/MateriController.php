@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\Storage;
 
 class MateriController extends Controller
 {
+    protected $sidebarItems;
+
+    public function __construct()
+    {
+        // Menggunakan SidebarController untuk mendapatkan data sidebar
+        $sidebarController = new SidebarItemsController();
+        $this->sidebarItems = $sidebarController->getSidebarItems();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,13 +30,9 @@ class MateriController extends Controller
     {
         $materis = Materi::all();
 
-        // Menggunakan SidebarController untuk mendapatkan data sidebar
-        $sidebarController = new SidebarItemsController();
-        $sidebarItems = $sidebarController->getSidebarItems();
-
         return view('back.materi.index', [
             'materis' => $materis,
-            'sidebarItems' => $sidebarItems
+            'sidebarItems' => $this->sidebarItems
         ]);
     }
 
@@ -39,7 +44,10 @@ class MateriController extends Controller
     public function create()
     {
         $playlists = Playlist::all();
-        return view('back.materi.create', compact('playlists'));
+        return view('back.materi.create', [
+            'playlists' => $playlists,
+            'sidebarItems' => $this->sidebarItems
+        ]);
     }
 
     /**
@@ -89,6 +97,7 @@ class MateriController extends Controller
             return view('back.materi.edit', [
                 'materi' => $materi,
                 'playlists' => $playlists,
+                'sidebarItems' => $this->sidebarItems
             ]);
         } catch (Exception $e) {
             Log::error($e);

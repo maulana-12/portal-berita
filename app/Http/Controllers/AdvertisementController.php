@@ -10,6 +10,15 @@ use Illuminate\Support\Facades\Storage;
 
 class AdvertisementController extends Controller
 {
+    protected $sidebarItems;
+
+    public function __construct()
+    {
+        // Menggunakan SidebarController untuk mendapatkan data sidebar
+        $sidebarController = new SidebarItemsController();
+        $this->sidebarItems = $sidebarController->getSidebarItems();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,11 +28,10 @@ class AdvertisementController extends Controller
     {
         $advertisements = Advertisement::all();
 
-        // Menggunakan SidebarController untuk mendapatkan data sidebar
-        $sidebarController = new SidebarItemsController();
-        $sidebarItems = $sidebarController->getSidebarItems();
-
-        return view('back.advertisement.index',  compact('advertisements', 'sidebarItems'));
+        return view('back.advertisement.index',  [
+            'advertisements' => $advertisements,
+            'sidebarItems' => $this->sidebarItems
+        ]);
     }
 
     /**
@@ -33,7 +41,9 @@ class AdvertisementController extends Controller
      */
     public function create()
     {
-        return view('back.advertisement.create');
+        return view('back.advertisement.create', [
+            'sidebarItems' => $this->sidebarItems
+        ]);
     }
 
     /**
@@ -85,6 +95,7 @@ class AdvertisementController extends Controller
 
             return view('back.advertisement.edit', [
                 'advertisement' => $advertisement,
+                'sidebarItems' => $this->sidebarItems
             ]);
         } catch (Exception $e) {
             Log::error($e);

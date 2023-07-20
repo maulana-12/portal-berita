@@ -9,7 +9,7 @@
                     <h4 class="text-section">Components</h4>
                 </li>
                 @foreach ($sidebarItems as $item)
-                    <li class="nav-item {{ request()->is($item['route']) ? ' active' : '' }}">
+                    <li class="nav-item {{ str_starts_with(request()->url(), $item['url']) ? ' active' : '' }}">
                         <a href="{{ $item['url'] }}">
                             <i class="{{ $item['icon'] }}"></i>
                             <p>{{ $item['title'] }}</p>

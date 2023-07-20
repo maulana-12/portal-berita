@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Storage;
 
 class SlideController extends Controller
 {
+    protected $sidebarItems;
+
+    public function __construct()
+    {
+        // Menggunakan SidebarController untuk mendapatkan data sidebar
+        $sidebarController = new SidebarItemsController();
+        $this->sidebarItems = $sidebarController->getSidebarItems();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,13 +29,9 @@ class SlideController extends Controller
     {
         $slides = Slide::all();
 
-        // Menggunakan SidebarController untuk mendapatkan data sidebar
-        $sidebarController = new SidebarItemsController();
-        $sidebarItems = $sidebarController->getSidebarItems();
-
         return view('back.slide.index', [
             'slides' => $slides,
-            'sidebarItems' => $sidebarItems
+            'sidebarItems' => $this->sidebarItems
         ]);
     }
 
@@ -37,7 +42,9 @@ class SlideController extends Controller
      */
     public function create()
     {
-        return view('back.slide.create');
+        return view('back.slide.create', [
+            'sidebarItems' => $this->sidebarItems
+        ]);
     }
 
     /**
@@ -89,6 +96,7 @@ class SlideController extends Controller
 
             return view('back.slide.edit', [
                 'slide' => $slide,
+                'sidebarItems' => $this->sidebarItems
             ]);
         } catch (Exception $e) {
             Log::error($e);

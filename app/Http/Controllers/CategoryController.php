@@ -10,6 +10,14 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
+    protected $sidebarItems;
+
+    public function __construct()
+    {
+        // Menggunakan SidebarController untuk mendapatkan data sidebar
+        $sidebarController = new SidebarItemsController();
+        $this->sidebarItems = $sidebarController->getSidebarItems();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,11 +27,10 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
 
-        // Menggunakan SidebarController untuk mendapatkan data sidebar
-        $sidebarController = new SidebarItemsController();
-        $sidebarItems = $sidebarController->getSidebarItems();
-
-        return view('back.category.index', compact('categories', 'sidebarItems'));
+        return view('back.category.index', [
+            'categories' => $categories,
+            'sidebarItems' => $this->sidebarItems
+        ]);
     }
 
     /**
@@ -33,7 +40,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('back.category.create');
+        return view('back.category.create', [
+            'sidebarItems' => $this->sidebarItems
+        ]);
     }
 
     /**
@@ -77,7 +86,10 @@ class CategoryController extends Controller
     {
         try {
             $category = Category::findOrFail($id);
-            return view('back.category.edit', compact('category'));
+            return view('back.category.edit', [
+                'category' => $category,
+                'sidebarItems' => $this->sidebarItems
+            ]);
         } catch (Exception $e) {
             Log::error($e);
         }

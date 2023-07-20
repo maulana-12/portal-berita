@@ -10,10 +10,10 @@ class SidebarItemsController extends Controller
     {
         return [
             [
-                'url' => '/dashboard',
+                'url' => route('dashboard'),
                 'icon' => 'fas fa-home',
                 'title' => 'Dashboard',
-                'route' => 'dashboard',
+                'route' => 'dashboard.index',
             ],
             [
                 'url' => route('category.index'),
