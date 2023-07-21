@@ -44,4 +44,27 @@ class FrontendController extends Controller
             'latestPost' => $latestPost
         ]);
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('q');
+
+        $advertisementA = Advertisement::where('id', '1')->first();
+
+        $latestPost = Article::orderBy('created_at', 'DESC')->limit('5')->get();
+
+        // Ambil berita yang sesuai dengan kata kunci pencarian
+        $articles = Article::where('title', 'like', '%' . $query . '%')
+            ->orWhere('body', 'like', '%' . $query . '%')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('front.search', [
+            'articles' => $articles,
+            'query' => $query,
+            'category' => $this->category,
+            'advertisementA' => $advertisementA,
+            'latestPost' => $latestPost
+        ]);
+    }
 }

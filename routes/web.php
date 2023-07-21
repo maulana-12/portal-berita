@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [FrontendController::class, 'index'])->name('landing-page');
 Route::get('/detail-article/{slug}', [FrontendController::class, 'detail'])->name('detail-article');
+Route::get('/search', [FrontendController::class, 'search'])->name('search-article');
 
 Auth::routes();
 
